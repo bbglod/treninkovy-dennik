@@ -1,6 +1,5 @@
 'use client'
-
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../../lib/supabaseClient'
 
@@ -8,6 +7,7 @@ export default function TreninkDetailPage({ params }) {
   const [trenink, setTrenink] = useState(null)
   const [serie, setSerie] = useState([])
   const router = useRouter()
+  const { id } = use(params)
 
   useEffect(() => {
     nacistDetail()
@@ -19,13 +19,13 @@ export default function TreninkDetailPage({ params }) {
     const { data: treninkData } = await supabase
       .from('treninky')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single()
     setTrenink(treninkData)
     const { data: serieData } = await supabase
       .from('serie')
       .select('*, cviky(nazev)')
-      .eq('trenink_id', params.id)
+      .eq('trenink_id', id)
     setSerie(serieData || [])
   }
 
@@ -54,3 +54,5 @@ export default function TreninkDetailPage({ params }) {
     </div>
   )
 }
+
+ 
