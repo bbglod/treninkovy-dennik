@@ -2,6 +2,7 @@
 import { use, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../../lib/supabaseClient'
+import styles from './page.module.css'
 
 export default function TreninkDetailPage({ params }) {
   const [trenink, setTrenink] = useState(null)
@@ -37,22 +38,30 @@ export default function TreninkDetailPage({ params }) {
   if (!trenink) return <p style={{ padding: '2rem' }}>Načítám...</p>
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <button onClick={() => router.push('/treninky')}>← Zpět</button>
-      <h1>Trénink {trenink.datum}</h1>
-      {trenink.poznamka && <p>{trenink.poznamka}</p>}
-      <h2>Série</h2>
-      {serie.length === 0 && <p>Zatím žádné série.</p>}
+  <div className={styles.background}>
+    <button className={styles.button} onClick={() => router.push('/treninky')}>← Zpět</button>
+    <h1 className={styles.title}>Trénink {trenink.datum}</h1>
+    {trenink.poznamka && <p className={styles.note}>{trenink.poznamka}</p>}
+    <h2>Série</h2>
+    {serie.length === 0 && <p className={styles.empty}>Zatím žádné série.</p>}
+    <div className={styles.serie}>
       {serie.map((s) => (
-        <div key={s.id}>
-          <p>{s.cviky?.nazev} — {s.vaha} kg × {s.opakovani} opakování</p>
+        <div key={s.id} className={styles.serieCard}>
+          <p className={styles.serieText}>{s.cviky?.nazev}</p>
+          <p>{s.vaha} kg × {s.opakovani} opakování</p>
         </div>
       ))}
-      <button onClick={smazatTrenink} style={{ color: 'red', marginTop: '1rem' }}>
+    </div>
+    <div className={styles.actions}>
+      <button className={styles.btnPrimary} onClick={() => router.push(`/treninky/${id}/novaserie`)}>
+        + Nová série
+      </button>
+      <button className={styles.btnDanger} onClick={smazatTrenink}>
         Smazat trénink
       </button>
     </div>
-  )
+  </div>
+)
 }
 
  

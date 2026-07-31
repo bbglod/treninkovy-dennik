@@ -1,0 +1,84 @@
+.background {
+  max-width: 100%;
+    padding: 3rem 5rem;
+  min-height: 100vh;
+  background-color: #030712;
+  color: white;
+  font-family: sans-serif;
+}
+
+.button {
+  background: #1f2937;
+  color: #d1d5db;
+  border: none;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.note {
+  color: #9ca3af;
+  margin-bottom: 2rem;
+}
+
+.serie {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.serieCard {
+  background: #111827;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.serieText {
+  font-weight: 600;
+}
+
+.empty {
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btnPrimary {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.btnDanger {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  background: #7f1d1d;
+  color: #fca5a5;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 480px) {
+  .background {
+    padding: 1rem;
+  }
+}

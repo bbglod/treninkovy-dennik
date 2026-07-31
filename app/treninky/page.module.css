@@ -1,0 +1,85 @@
+.background {
+  max-width: 100%;
+  margin: 0;
+  padding: 2rem 3rem;
+  min-height: 100vh;
+  background-color: #030712;
+  color: white;
+  font-family: sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btnSecondary {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  background: #1f2937;
+  color: #d1d5db;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.btnPrimary {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: #111827;
+  border-radius: 16px;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: #1f2937;
+}
+
+.cardDate {
+  font-weight: 600;
+}
+
+.cardNote {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.empty {
+  color: #6b7280;
+  text-align: center;
+  margin-top: 5rem;
+}
+
+@media (max-width: 480px) {
+  .background {
+    padding: 1rem;
+  }
+}

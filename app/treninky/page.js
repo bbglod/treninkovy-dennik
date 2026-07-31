@@ -1,8 +1,10 @@
 'use client'
 
+
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../lib/supabaseClient'
+import styles from './page.module.css'
 
 export default function TreninkyPage() {
   const [treninky, setTreninky] = useState([])
@@ -20,15 +22,27 @@ export default function TreninkyPage() {
   }
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>Moje tréninky</h1>
-      <button onClick={() => router.push('/treninky/novy')}>+ Nový trénink</button>
-      {treninky.length === 0 && <p>Zatím žádné tréninky.</p>}
+  <div className={styles.background}>
+    <div className={styles.header}>
+      <h1 className={styles.title}>Moje tréninky</h1>
+      <div className={styles.buttons}>
+        <button className={styles.btnSecondary} onClick={() => router.push('/cviky')}>
+          Cviky
+        </button>
+        <button className={styles.btnPrimary} onClick={() => router.push('/treninky/novy')}>
+          + Nový
+        </button>
+      </div>
+    </div>
+    {treninky.length === 0 && <p className={styles.empty}>Zatím žádné tréninky.</p>}
+    <div className={styles.list}>
       {treninky.map((t) => (
-        <div key={t.id} onClick={() => router.push(`/treninky/${t.id}`)}>
-          <p>{t.datum} {t.poznamka && `— ${t.poznamka}`}</p>
+        <div key={t.id} className={styles.card} onClick={() => router.push(`/treninky/${t.id}`)}>
+          <p className={styles.cardDate}>{t.datum}</p>
+          {t.poznamka && <p className={styles.cardNote}>{t.poznamka}</p>}
         </div>
       ))}
     </div>
-  )
+  </div>
+)
 }
