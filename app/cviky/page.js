@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../lib/supabaseClient'
+import styles from './page.module.css'
 
 export default function CvikyPage() {
   const [cviky, setCviky] = useState([])
@@ -35,23 +36,28 @@ export default function CvikyPage() {
   }
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <button onClick={() => router.push('/treninky')}>← Zpět</button>
-      <h1>Moje cviky</h1>
+  <div className={styles.background}>
+    <button className={styles.btnBack} onClick={() => router.push('/treninky')}>← Zpět</button>
+    <h1 className={styles.title}>Moje cviky</h1>
+    <div className={styles.add}>
       <input
+        className={styles.input}
         placeholder="Název cviku"
         value={novyCvik}
         onChange={(e) => setNovyCvik(e.target.value)}
       />
-      <button onClick={pridatCvik}>Přidat</button>
-      <p>{zprava}</p>
-      {cviky.length === 0 && <p>Zatím žádné cviky.</p>}
+      <button className={styles.btnPrimary} onClick={pridatCvik}>Přidat</button>
+    </div>
+    {zprava && <p className={styles.error}>{zprava}</p>}
+    {cviky.length === 0 && <p className={styles.empty}>Zatím žádné cviky.</p>}
+    <div className={styles.cviky_grid}>
       {cviky.map((c) => (
-        <div key={c.id} style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <p>{c.nazev}</p>
-          <button onClick={() => smazatCvik(c.id)} style={{ color: 'red' }}>Smazat</button>
+        <div key={c.id} className={styles.delete}>
+          <p className={styles.cvik}>{c.nazev}</p>
+          <button className={styles.btnDanger} onClick={() => smazatCvik(c.id)}>Smazat</button>
         </div>
       ))}
     </div>
-  )
+  </div>
+)
 }
