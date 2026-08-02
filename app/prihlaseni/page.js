@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../lib/supabaseClient'
+import styles from './page.module.css'
 
 export default function PrihlaseniPage() {
   const [email, setEmail] = useState('')
@@ -17,12 +18,30 @@ export default function PrihlaseniPage() {
   }
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>Přihlášení</h1>
-      <input placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Heslo" value={heslo} onChange={(e) => setHeslo(e.target.value)} />
-      <button onClick={prihlasit}>Přihlásit se</button>
-      <p>{zprava}</p>
+    <div className={styles.background}>
+      <div className={styles.card_reg}>
+        <h1 className={styles.title}>Přihlášení</h1>
+        <p className={styles.subtitle}>Zadej své přihlašovací údaje.</p>
+        <div className={styles.input}>
+          <input
+            className={styles.field}
+            placeholder="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            className={styles.field}
+            type="password"
+            placeholder="Heslo"
+            value={heslo}
+            onChange={(e) => setHeslo(e.target.value)}
+          />
+          <button className={styles.btnPrimary} onClick={prihlasit}>
+            Přihlásit se
+          </button>
+          {zprava && <p className={styles.error}>{zprava}</p>}
+        </div>
+      </div>
     </div>
   )
 }
