@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../../lib/supabaseClient'
+import styles from './page.module.css'
 
 export default function NovyTreninkPage() {
   const [datum, setDatum] = useState(new Date().toISOString().split('T')[0])
@@ -19,12 +20,16 @@ export default function NovyTreninkPage() {
   }
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>Nový trénink</h1>
-      <input type="date" value={datum} onChange={(e) => setDatum(e.target.value)} />
-      <input placeholder="Poznámka (nepovinné)" value={poznamka} onChange={(e) => setPoznamka(e.target.value)} />
-      <button onClick={ulozit}>Uložit</button>
-      <p>{zprava}</p>
+    <div className={styles.background}>
+      <button className={styles.btnBack} onClick={() => router.push('/treninky')}>← Zpět</button>
+      <h1 className={styles.title}>Nový trénink</h1>
+      <div className={styles.form}>
+        <input className={styles.input} type="date" value={datum} onChange={(e) => setDatum(e.target.value)} />
+        <input className={styles.input} placeholder="Poznámka (nepovinné)" value={poznamka} onChange={(e) => setPoznamka(e.target.value)} />
+        <button className={styles.btnPrimary} onClick={ulozit}>Uložit</button>
+        {zprava && <p className={styles.error}>{zprava}</p>}
+      </div>
     </div>
   )
+
 }
