@@ -31,7 +31,7 @@ export default function TreninkDetailPage({ params }) {
   }
 
   async function smazatTrenink() {
-    await supabase.from('treninky').delete().eq('id', params.id)
+    await supabase.from('treninky').delete().eq('id', id)
     router.push('/treninky')
   }
 
@@ -43,6 +43,7 @@ export default function TreninkDetailPage({ params }) {
     <h1 className={styles.title}>Trénink {trenink.datum}</h1>
     {trenink.poznamka && <p className={styles.note}>{trenink.poznamka}</p>}
     <h2>Série</h2>
+    <p className={styles.note}>Celkem: {serie.reduce((sum, s) => sum + s.vaha * s.opakovani, 0)} kg</p>
     {serie.length === 0 && <p className={styles.empty}>Zatím žádné série.</p>}
     <div className={styles.serie}>
       {serie.map((s) => (
