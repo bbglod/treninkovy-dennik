@@ -28,6 +28,7 @@ export default function TreninkDetailPage({ params }) {
       .select('*, cviky(nazev)')
       .eq('trenink_id', id)
     setSerie(serieData || [])
+    setSerie(serieData || [])
   }
 
   async function smazatTrenink() {
@@ -37,7 +38,7 @@ export default function TreninkDetailPage({ params }) {
 
   if (!trenink) return <p style={{ padding: '2rem' }}>Načítám...</p>
 
-  return (
+return (
   <div className={styles.background}>
     <button className={styles.button} onClick={() => router.push('/treninky')}>← Zpět</button>
     <h1 className={styles.title}>Trénink {trenink.datum}</h1>
@@ -53,6 +54,20 @@ export default function TreninkDetailPage({ params }) {
         </div>
       ))}
     </div>
+    {serie.length > 0 && (
+      <div style={{ marginTop: '1rem' }}>
+        <h3>Osobní rekordy</h3>
+        {Object.entries(
+          serie.reduce((acc, s) => {
+            const nazev = s.cviky?.nazev || 'Neznámý cvik'
+            if (!acc[nazev] || s.vaha > acc[nazev]) acc[nazev] = s.vaha
+            return acc
+          }, {})
+        ).map(([nazev, maxVaha]) => (
+          <p key={nazev}>{nazev}: {maxVaha} kg</p>
+        ))}
+      </div>
+    )}
     <div className={styles.actions}>
       <button className={styles.btnPrimary} onClick={() => router.push(`/treninky/${id}/novaserie`)}>
         + Nová série
@@ -62,7 +77,4 @@ export default function TreninkDetailPage({ params }) {
       </button>
     </div>
   </div>
-)
-}
-
- 
+)}
