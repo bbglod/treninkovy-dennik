@@ -10,6 +10,8 @@ export default function CvikyPage() {
   const [novyCvik, setNovyCvik] = useState('')
   const [zprava, setZprava] = useState('')
   const router = useRouter()
+  const [editCvik, setEditCvik] = useState(null)
+const [novyNazev, setNovyNazev] = useState('')
 
   useEffect(() => {
     nacistCviky()
@@ -34,6 +36,13 @@ export default function CvikyPage() {
     await supabase.from('cviky').delete().eq('id', id)
     nacistCviky()
   }
+  async function upravitCvik(id) {
+  if (!novyNazev.trim()) return
+  await supabase.from('cviky').update({ nazev: novyNazev.trim() }).eq('id', id)
+  setEditCvik(null)
+  setNovyNazev('')
+  nacistCviky()
+}
 
   return (
   <div className={styles.background}>
@@ -51,12 +60,32 @@ export default function CvikyPage() {
     {zprava && <p className={styles.error}>{zprava}</p>}
     {cviky.length === 0 && <p className={styles.empty}>Zatím žádné cviky.</p>}
     <div className={styles.cviky_grid}>
-      {cviky.map((c) => (
-        <div key={c.id} className={styles.delete}>
-          <p className={styles.cvik}>{c.nazev}</p>
+     {cviky.map((c) => (
+  <div key={c.id} className={styles.delete}>
+    {editCvik === c.id ? (
+      <>
+        <input
+          className={styles.input}
+          value={novyNazev}
+          onChange={(e) => setNovyNazev(e.target.value)}
+          style={{ maxWidth: '200px' }}
+        />
+        <button className={styles.btnPrimary} onClick={() => upravitCvik(c.id)}>Uložit</button>
+        <button className={styles.btnDanger} onClick={() => setEditCvik(null)}>Zrušit</button>
+      </>
+    ) : (
+      <>
+        <p className={styles.cvik} onClick={() => router.push(`/cviky/${c.id}`)} style={{ cursor: 'pointer' }}>
+  {c.nazev}
+</p>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button className={styles.btnDanger} onClick={() => { setEditCvik(c.id); setNovyNazev(c.nazev) }}>Upravit</button>
           <button className={styles.btnDanger} onClick={() => smazatCvik(c.id)}>Smazat</button>
         </div>
-      ))}
+      </>
+    )}
+  </div>
+))}
     </div>
   </div>
 )
