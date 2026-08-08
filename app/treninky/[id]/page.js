@@ -60,8 +60,11 @@ return (
 
     {trenink.poznamka && <p className={styles.note}>{trenink.poznamka}</p>}
 
-    <h2>Série</h2>
-    <p className={styles.note}>Celkem: {serie.reduce((sum, s) => sum + s.vaha * s.opakovani, 0)} kg</p>
+    
+<div className={styles.celkem}>
+  <span>Celkem zvedeno</span>
+  <span>{serie.reduce((sum, s) => sum + s.vaha * s.opakovani, 0)} kg</span>
+</div>
     {serie.length === 0 && <p className={styles.empty}>Zatím žádné série.</p>}
     <div className={styles.serie}>
       {serie.map((s) => (
@@ -114,20 +117,8 @@ return (
   </div>
 ))}
     </div>
-    {serie.length > 0 && (
-      <div style={{ marginTop: '1rem' }}>
-        <h3>Osobní rekordy</h3>
-        {Object.entries(
-          serie.reduce((acc, s) => {
-            const nazev = s.cviky?.nazev || 'Neznámý cvik'
-            if (!acc[nazev] || s.vaha > acc[nazev]) acc[nazev] = s.vaha
-            return acc
-          }, {})
-        ).map(([nazev, maxVaha]) => (
-          <p key={nazev}>{nazev}: {maxVaha} kg</p>
-        ))}
-      </div>
-    )}
+    
+    
     <div className={styles.actions}>
       <button className={styles.btnPrimary} onClick={() => router.push(`/treninky/${id}/novaserie`)}>
         + Nová série
